@@ -2738,18 +2738,29 @@ NULL};
 "and recycling it for more than its",
 "worth But trust me on the sunscreen"
 };
+
       int i;
 
+      FILE* file = fopen("output_large.txt", "w");
+	if (!file)
+	{
+		printf("Error: cannot open output file\n");
+		exit(1);
+	}
+
+      
       for (i = 0; find_strings[i]; i++)
       {
             init_search(find_strings[i]);
             here = strsearch(search_strings[i]);
-            printf("\"%s\" is%s in \"%s\"", find_strings[i],
+            fprintf(file, "\"%s\" is%s in \"%s\"", find_strings[i],
                   here ? "" : " not", search_strings[i]);
             if (here)
-                  printf(" [\"%s\"]", here);
-            putchar('\n');
+                  fprintf(file, " [\"%s\"]", here);
+            fprintf(file, "\n");
       }
+
+      fclose(file);
 
       return 0;
 }
